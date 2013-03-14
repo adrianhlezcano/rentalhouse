@@ -1,0 +1,91 @@
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="template" template="/WEB-INF/jsp/main_template.jsp">
+		<put-attribute name="search" value=""/>
+		<put-attribute name="content" value=""/>		
+		<put-attribute name="login" value="/WEB-INF/jsp/usuario/login.jsp"/>
+	</definition>
+	<!-- WELCOME VIEW -->
+	<definition name="welcome" extends="template">
+		<put-attribute name="search" value="/WEB-INF/jsp/propiedad/search.jsp"/>	
+		<put-attribute name="content" value="/WEB-INF/jsp/propiedad/list.jsp"/>
+	</definition>	
+	<!-- USUARIO VIEW -->
+	<definition name="usuario/login" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/usuario/login.jsp"/>
+	</definition>
+	<definition name="usuario/register" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/usuario/register.jsp"/>
+	</definition>	
+	<!-- PROPIETARIO VIEW -->
+	<definition name="propietario/display" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/propietario/display.jsp"/>
+	</definition>
+	<definition name="propietario/form" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/propietario/form.jsp"/>
+	</definition>
+	<definition name="propietario/list" extends="template">
+		<put-attribute name="search" value="/WEB-INF/jsp/persona/search.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/jsp/propietario/list.jsp"/>
+	</definition>
+	<!-- INQUILINO VIEW -->
+	<definition name="inquilino/display" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/inquilino/display.jsp"/>
+	</definition>
+	<definition name="inquilino/form" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/inquilino/form.jsp"/>
+	</definition>
+	<definition name="inquilino/list" extends="template">
+		<put-attribute name="search" value="/WEB-INF/jsp/persona/search.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/jsp/inquilino/list.jsp"/>
+	</definition>
+	<!-- GARANTE VIEW -->
+	<definition name="garante/display" extends="template">		
+		<put-attribute name="content" value="/WEB-INF/jsp/garante/display.jsp"/>
+	</definition>
+	<definition name="garante/form" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/garante/form.jsp"/>
+	</definition>
+	<definition name="garante/list" extends="template">
+		<put-attribute name="search" value="/WEB-INF/jsp/persona/search.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/jsp/garante/list.jsp"/>
+	</definition>
+	<!-- PROPIEDAD VIEW -->
+	<definition name="propiedad/display" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/propiedad/display.jsp"/>
+	</definition>
+	<definition name="propiedad/form" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/propiedad/form.jsp"/>
+	</definition>
+	<definition name="propiedad/list" extends="template">	
+		<put-attribute name="search" value="/WEB-INF/jsp/propiedad/search.jsp"/>	
+		<put-attribute name="content" value="/WEB-INF/jsp/propiedad/list.jsp"/>
+	</definition>
+	<!-- CONTRATO VIEW -->
+	<definition name="contrato/display" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/contrato/display.jsp"/>
+	</definition>
+	<definition name="contrato/form" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/contrato/form.jsp"/>
+	</definition>
+	<definition name="contrato/list" extends="template">
+	    <put-attribute name="search" value="/WEB-INF/jsp/contrato/search.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/jsp/contrato/list.jsp"/>
+	</definition>
+	<definition name="contrato/cuotas" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/contrato/cuotas.jsp"/>
+	</definition>
+	<!-- EXCEPTIONS -->
+	<definition name="pageNotFound" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/exception/pageNotFound.jsp"/>
+	</definition>
+	<definition name="dataAccessFailure" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/exception/dataAccessFailure.jsp"/>
+	</definition>
+	<definition name="uncaughtException" extends="template">	
+		<put-attribute name="content" value="/WEB-INF/jsp/exception/uncaughtException.jsp"/>
+	</definition>
+	
+</tiles-definitions>	
