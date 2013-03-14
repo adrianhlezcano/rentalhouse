@@ -16,10 +16,10 @@ public class PersonaValidator {
 		if (!StringValidation.isValidString(String.valueOf(personaForm.getDni()), 7, 9, "^[0-9]+$")) {
 			errors.rejectValue("dni", "dni.invalid", "dni.invalid");
 		}
-		if (!StringValidation.isValidString(personaForm.getCuit(), 11, 14, "^[0-9.-]+$")){
+		if (!StringValidation.isValidString(personaForm.getCuit(), 11, 14, "^[0-9\\-]+$")){
 			errors.rejectValue("cuit", "cuit.invalid", "cuit.invalid");
 		}
-		if (!StringValidation.isValidString(personaForm.getTelefono(), 10, 14, "^[0-9]+$")){
+		if (!StringValidation.isValidString(personaForm.getTelefono(), 10, 14, "^[0-9\\-\\(\\)]+$")){
 			errors.rejectValue("telefono", "telefono.invalid", "telefono.invalid");
 		}
 		if(!StringValidation.isValidString(personaForm.getEmail(), 10, 60, "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")){

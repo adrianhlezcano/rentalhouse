@@ -15,16 +15,16 @@ public class PropiedadValidator {
 			errors.rejectValue("precioVenta", "precioVenta.invalid", "precioVenta.invalid");
 		}
 		if (StringUtils.hasLength(propiedadForm.getPrecioAlquiler()) &&
-				!StringValidation.isValidString(propiedadForm.getPrecioAlquiler(), 3, 10, "^[1-9][0-9]+$")) {
+				!StringValidation.isValidString(propiedadForm.getPrecioAlquiler(), 3, 10, "^[\\d]+$")) {
 			errors.rejectValue("precioAlquiler", "precioAlquiler.invalid", "precioAlquiler.invalid");
 		} 
 		if (StringUtils.hasLength(propiedadForm.getPrecioVenta()) &&
 				!StringValidation.isValidString(propiedadForm.getPrecioVenta()
-						, 3, 10, "^[1-9][0-9]+$")) {
+						, 3, 10, "^[\\d]+$")) {
 			errors.rejectValue("precioVenta", "precioVenta.invalid", "precioVenta.invalid");
 		} 
 		if (StringUtils.hasLength(propiedadForm.getSuperficie()) &&
-				!StringValidation.isValidString(propiedadForm.getSuperficie(), 2, 8, "^[1-9][0-9]+$")) {
+				!StringValidation.isValidString(propiedadForm.getSuperficie(), 2, 8, "^[\\d\\.]+$")) {
 			errors.rejectValue("superficie", "superficie.invalid", "superficie.invalid");
 		} 
 		if (StringUtils.hasLength(propiedadForm.getDetalle()) &&
@@ -34,10 +34,10 @@ public class PropiedadValidator {
 		if (!StringValidation.isValidString(propiedadForm.getCalle(), 5, 30)) {
 			errors.rejectValue("calle", "calle.invalid", "calle.invalid");
 		} 
-		if (!StringValidation.isValidString(propiedadForm.getNumero(), 1, 5, "^[0-9]+$")) {
+		if (!StringValidation.isValidString(propiedadForm.getNumero(), 1, 5, "^[\\d]+$")) {
 			errors.rejectValue("numero", "numero.invalid", "numero.invalid");
 		} 
-		if (!StringValidation.isValidString(propiedadForm.getCodigoPostal(), 2, 8, "^[a-zA-Z0-9]+$")) {
+		if (!StringValidation.isValidString(propiedadForm.getCodigoPostal(), 2, 8, "^[\\w]+$")) {
 			errors.rejectValue("codigoPostal", "codigoPostal.invalid", "codigoPostal.invalid");
 		}
 		if (propiedadForm.getIdPropietario() == null || 0 == propiedadForm.getIdPropietario()) {

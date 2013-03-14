@@ -18,10 +18,7 @@ public class GaranteValidator extends PersonaValidator {
 		if (!StringValidation.isValidString(garanteForm.getCodigoPostal(), 2, 8, "^[a-zA-Z0-9]+$")) {
 			errors.rejectValue("codigoPostal", "codigoPostal.invalid", "codigoPostal.invalid");
 		}		
-		if (!StringValidation.isValidString(String.valueOf(garanteForm.getIdLocalidad()), 1, 7, "^[1-9][0-9]+$")) {
-			errors.rejectValue("idLocalidad", "localidad.invalid", "localidad.invalid");
-		}		
-		if (!StringValidation.isValidString(garanteForm.getValorGarantia(), 1, 10, "^[1-9][0-9]+$")) {
+		if (!StringValidation.isValidString(garanteForm.getValorGarantia(), 1, 10, "^[\\d\\.]+$")) {
 			errors.rejectValue("valorGarantia", "valorGarantia.invalid", "valorGarantia.invalid");
 		}
 		if (StringUtils.hasLength(garanteForm.getDetalleGarantia()) && 

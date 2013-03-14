@@ -9,7 +9,7 @@ public class InquilinoValidator extends PersonaValidator {
 	
 	public void validate(InquilinoForm inquilinoForm, Errors errors) {
 		super.validate(inquilinoForm, errors);		
-		if (!StringValidation.isValidString(inquilinoForm.getIngreso(), 4, 10, "^[1-9][0-9]+$")) {
+		if (!StringValidation.isValidString(inquilinoForm.getIngreso(), 4, 10, "^[\\d\\.]+$")) {
 			errors.rejectValue("ingreso", "ingreso.invalid", "ingreso.invalid");
 		} 
 		if (!StringValidation.isValidString(inquilinoForm.getOcupacion(), 3, 30)) {
