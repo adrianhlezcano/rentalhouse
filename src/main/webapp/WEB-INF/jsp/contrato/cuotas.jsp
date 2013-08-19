@@ -1,5 +1,15 @@
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
-<div id="content">	 
+<div id="detalle"> 
+    <span class="title"><spring:message code="inquilinio" text="Inquilinio"/>:</span> 
+    <span class="titleValue">${contrato.inquilino.nombreCompleto }</span></br>
+
+    <span class="title"><spring:message code="Propiedad" text="Propiedad"/>:</span> 
+    <span class="titleValue">
+    ${contrato.propiedad.tipoPropiedad.value }
+    &lt; ${contrato.propiedad.domicilio.calle } ${contrato.propiedad.domicilio.numero } &gt;    
+    </span></br>
+</div>
+<div id="content">
 <table>
 	<thead>
 		<tr>
@@ -45,21 +55,21 @@
 	</tbody>
 	<tfoot>
 	  <tr>
-	    <spring:url value="/contrato/cuotas/${cuotaList[0].contrato.idContrato }" var="back">
+	    <spring:url value="/admin/contrato/cuotas/${cuotaList[0].contrato.idContrato }" var="back">
 		  	<spring:param name="page">${previous}</spring:param>
 		</spring:url>
-		<spring:url value="/contrato/cuotas/${cuotaList[0].contrato.idContrato }" var="forward">
+		<spring:url value="/admin/contrato/cuotas/${cuotaList[0].contrato.idContrato }" var="forward">
 		  	<spring:param name="page">${next}</spring:param>
 		</spring:url>			
 		<td align="left">
 		  <c:if test="${not empty previous and previous gt -1 }">
-		    <a href="${back }">&lt;&lt;</a>
+		    <a href="${back }">Atras</a>
 		  </c:if>		
 		</td>
 		<td colspan="3"></td>
 		<td align="right">
 		  <c:if test="${not empty next and next gt 0 }">
-		    <a href="${forward }">&gt;&gt;</a>
+		    <a href="${forward }">Siguiente</a>
 		  </c:if>			
 		</td>
 	  </tr>			

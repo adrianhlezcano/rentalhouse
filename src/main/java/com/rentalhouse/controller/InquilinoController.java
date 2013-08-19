@@ -1,12 +1,7 @@
 package com.rentalhouse.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.impl.LogFactoryImpl;
@@ -24,19 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rentalhouse.domain.Garante;
 import com.rentalhouse.domain.Inquilino;
-import com.rentalhouse.domain.Localidad;
 import com.rentalhouse.domain.Persona;
-import com.rentalhouse.domain.Propietario;
 import com.rentalhouse.form.InquilinoForm;
-import com.rentalhouse.form.PersonaForm;
-import com.rentalhouse.service.LocalidadService;
 import com.rentalhouse.service.PersonaService;
 import com.rentalhouse.utils.AppConstant;
-import com.rentalhouse.utils.StringValidation;
 import com.rentalhouse.validation.InquilinoValidator;
 
 @Controller
-@RequestMapping("/inquilino")
+@RequestMapping("/admin/inquilino")
 public class InquilinoController {
 	@Autowired
 	@Qualifier("personaService")
@@ -46,24 +36,24 @@ public class InquilinoController {
 	@RequestMapping(method=RequestMethod.GET)
 	public String show(Model model){		
 		model.addAttribute(personaService.getAll(0, 10, false, Inquilino.class));
-		return "inquilino/list";
+		return "admin/inquilino/list";
 	}	
 	@RequestMapping(method=RequestMethod.GET, params="new")
 	public String setupForm(Model model){
 		model.addAttribute(new InquilinoForm());
-		return "inquilino/form";
+		return "admin/inquilino/form";
 	}
 	@RequestMapping(method=RequestMethod.POST)
 	public String processForm(@ModelAttribute InquilinoForm inquilinoForm, BindingResult result){
 		new InquilinoValidator().validate(inquilinoForm, result);
 		if(result.hasErrors()){			
-			return "inquilino/form";
+			return "admin/inquilino/form";
 		}	
 		Garante garante = (Garante) personaService.get(inquilinoForm.getIdGarante());
 		if (inquilinoForm.getAction().equals(AppConstant.INSERT)) {  
 			if (personaService.getByDni(Integer.valueOf(inquilinoForm.getDni()), Persona.class) != null){
 				// agregar error de que ya existe una persona con mismo dni
-				return "inquilino/form";
+				return "admin/inquilino/form";
 			}else{
 				Inquilino inquilino = inquilinoForm.toInquilino(new Inquilino(), garante);
 				personaService.update(inquilino);
@@ -72,14 +62,14 @@ public class InquilinoController {
 			Inquilino inquilino = (Inquilino) personaService.get(inquilinoForm.getIdPersona());
 			personaService.update(inquilinoForm.toInquilino(inquilino, garante));
 		}		
-		return "redirect:/inquilino/"+inquilinoForm.getDni();		
+		return "redirect:/admin/inquilino/"+inquilinoForm.getDni();		
 	}
 	// This is a common way to resolve a url with a param
 	@RequestMapping(method=RequestMethod.GET, value="/{dni}")
 	public String displayPersona(@PathVariable Integer dni, Model model){
 		Inquilino inquilino = (Inquilino) personaService.getByDni(dni, Inquilino.class);
 		model.addAttribute(inquilino);
-		return "inquilino/display";
+		return "admin/inquilino/display";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/edit/{dni}")
 	public String edit(@PathVariable Integer dni, Model model){
@@ -89,13 +79,13 @@ public class InquilinoController {
 		    inquilino.getGarantes().add(g);
 		}					
 		model.addAttribute(new InquilinoForm(inquilino));
-		return "inquilino/form";
+		return "admin/inquilino/form";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/remove")
 	public String remove(@RequestParam("idPersona") Integer idPersona){
 		Inquilino inquilino = (Inquilino) personaService.get(idPersona);
 		personaService.delete(inquilino);
-		return "redirect:/inquilino";
+		return "redirect:/admin/inquilino";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/get")
 	public @ResponseBody Map<String, String> getInquilino(@RequestParam("dni") Integer dni){

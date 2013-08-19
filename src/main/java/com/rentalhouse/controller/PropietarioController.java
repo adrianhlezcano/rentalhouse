@@ -1,9 +1,6 @@
 package com.rentalhouse.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rentalhouse.domain.Garante;
 import com.rentalhouse.domain.Localidad;
 import com.rentalhouse.domain.Persona;
 import com.rentalhouse.domain.Propietario;
-import com.rentalhouse.form.GaranteForm;
-import com.rentalhouse.form.PersonaForm;
 import com.rentalhouse.form.PropietarioForm;
 import com.rentalhouse.service.LocalidadService;
 import com.rentalhouse.service.PersonaService;
 import com.rentalhouse.utils.AppConstant;
-import com.rentalhouse.utils.StringValidation;
 import com.rentalhouse.validation.PropietarioValidator;
 
 @Controller
-@RequestMapping("/propietario")
+@RequestMapping("/admin/propietario")
 public class PropietarioController {
 	@Autowired
 	@Qualifier("personaService")
@@ -44,7 +37,7 @@ public class PropietarioController {
 	@RequestMapping(method=RequestMethod.GET)
 	public String show(Model model){
 		model.addAttribute(personaService.getAll(0, 10, false, Propietario.class));
-		return "propietario/list";
+		return "admin/propietario/list";
 	}	
 	@RequestMapping(method=RequestMethod.GET, params="new")
 	public String setupForm(Model model){
@@ -54,7 +47,7 @@ public class PropietarioController {
 		form.setProvinciaList(localidadService.getProvincias());
 		form.setLocalidadList(localidadService.getLocalidadByIdProvincia(4));
 		model.addAttribute(form);
-		return "propietario/form";
+		return "admin/propietario/form";
 	}
 	@RequestMapping(method=RequestMethod.POST)
 	public String processForm(@ModelAttribute PropietarioForm propietarioForm, BindingResult result){
@@ -62,13 +55,13 @@ public class PropietarioController {
 		if(result.hasErrors()){		
 			propietarioForm.setProvinciaList(localidadService.getProvincias());
 			propietarioForm.setLocalidadList(localidadService.getLocalidadByIdProvincia(propietarioForm.getIdProvincia()));
-			return "propietario/form";
+			return "admin/propietario/form";
 		}
 		Localidad localidad = localidadService.getLocalidadById(propietarioForm.getIdLocalidad());
 		if (propietarioForm.getAction().equals(AppConstant.INSERT)) {  
 			if (personaService.getByDni(Integer.valueOf(propietarioForm.getDni()), Persona.class) != null){
 				// agregar error de que ya existe una persona con mismo dni
-				return "propietario/form";
+				return "admin/propietario/form";
 			}else{				
 				personaService.save(propietarioForm.toPropietario(new Propietario(), localidad));
 			}
@@ -76,7 +69,7 @@ public class PropietarioController {
 			Propietario propietario = (Propietario) personaService.get(propietarioForm.getIdPersona());
 			personaService.update(propietarioForm.toPropietario(propietario, localidad));
 		}		
-		return "redirect:/propietario/"+propietarioForm.getDni();		
+		return "redirect:/admin/propietario/"+propietarioForm.getDni();		
 	}
 	// This is a common way to resolve a url with a param
 	@RequestMapping(method=RequestMethod.GET, value="/{dni}")
@@ -85,7 +78,7 @@ public class PropietarioController {
 		Localidad locadlidad = localidadService.getLocalidadById(propietario.getDomicilio().getLocalidad().getIdLocalidad());
 		propietario.getDomicilio().setLocalidad(locadlidad);
 		model.addAttribute(propietario);
-		return "propietario/display";
+		return "admin/propietario/display";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/edit/{dni}")
 	public String edit(@PathVariable Integer dni, Model model){
@@ -96,13 +89,13 @@ public class PropietarioController {
 		form.setProvinciaList(localidadService.getProvincias());
 		form.setLocalidadList(localidadService.getLocalidadByIdProvincia(localidad.getProvincia().getIdProvincia()));
 		model.addAttribute(form);
-		return "propietario/form";
+		return "admin/propietario/form";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/remove")
 	public String remove(@RequestParam("idPersona") Integer idPersona){
 		Propietario propietario = (Propietario) personaService.get(idPersona);
 		personaService.delete(propietario);
-		return "redirect:/propietario";
+		return "redirect:/admin/propietario";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/get")
 	public @ResponseBody Map<String, String> getPropietario(@RequestParam("dni") Integer dni){

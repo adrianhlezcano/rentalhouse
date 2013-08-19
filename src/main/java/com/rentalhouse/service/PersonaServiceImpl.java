@@ -62,8 +62,17 @@ public class PersonaServiceImpl implements PersonaService{
 	public Usuario getUsuarioByUsername(String username) {		
 		return usuarioDao.getUsuarioByUsername(username);		
 	}
+	public boolean isNewUsuario(Usuario usuario){
+		return usuarioDao.isNewUsuario(usuario);
+	}
 	public Usuario getUsuarioForLogin(String username, String password) {		
-		return usuarioDao.getUsuarioForLogin(username, password);		
+		Usuario usuario = usuarioDao.getUsuarioForLogin(username, password);
+		if (usuario != null){
+			java.util.Date currentDate = new java.util.Date();
+			usuario.setFechaUltimoAcceso(currentDate);
+			update(usuario);
+		}
+		return usuario;
 	}	
 	public List findPersonaByFieldValue(String fieldName, String fieldValue, Class<? extends Persona> type) {
 		List<Persona> personList = Collections.emptyList();
@@ -84,6 +93,11 @@ public class PersonaServiceImpl implements PersonaService{
 			returnList.add(personJson);
 		}	
 		return returnList;
+	}
+	
+	public Usuario getUsuarioWithCredentials(String username,
+			String respuestaSeguridad, String email){
+		return usuarioDao.getUsuarioWithCredentials(username, respuestaSeguridad, email);
 	}
 	
 }

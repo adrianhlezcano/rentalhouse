@@ -1,6 +1,7 @@
 package com.rentalhouse.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.rentalhouse.domain.Propiedad;
 
@@ -12,7 +13,9 @@ public interface PropiedadService {
 	public Propiedad getPropiedadById(Integer idPropiedad);
 	public List<Propiedad> getPropidadByField(String fieldName, Object fieldValue);
 	public List<Propiedad> getPropidades(int firstRow, int maxRow, boolean all);
-	public List searchPropidades(String tipoOperacion, String tipoPropiedad,
+	public List<Map<String, Object>> searchPropidades(String tipoOperacion, String tipoPropiedad,
+			Integer precioMinimo, Integer precioMaximo, Integer dormitorios);
+	public List<Propiedad> searchPropidadesByParams(String tipoOperacion, String tipoPropiedad, 
 			Integer precioMinimo, Integer precioMaximo, Integer dormitorios);
 
 }

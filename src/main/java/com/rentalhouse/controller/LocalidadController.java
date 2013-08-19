@@ -15,7 +15,7 @@ import com.rentalhouse.service.LocalidadService;
 
 
 @Controller
-@RequestMapping("/localidad")
+@RequestMapping("/admin/localidad")
 public class LocalidadController {
 	@Autowired
 	@Qualifier("localidadService")

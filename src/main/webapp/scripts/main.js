@@ -9,11 +9,11 @@ var valid_search = function(){
  * create the menu items with the corresponding urls
  */
 var menuNav = {
-    'inquilino' : {'Nuevo' : '/inquilino?new', 'Listar' : '/inquilino' },
-    'propietario' : {'Nuevo' : '/propietario?new', 'Listar' : '/propietario' },
-    'garante' : {'Nuevo' : '/garante?new', 'Listar' : '/garante' },
-    'contrato' : {'Nuevo' : '/contrato?new', 'Listar' : '/contrato' },
-    'propiedad' : {'Nuevo' : '/propiedad?new', 'Listar' : '/propiedad' }		  
+    'inquilino' : {'Nuevo' : '/admin/inquilino?new', 'Listar' : '/admin/inquilino' },
+    'propietario' : {'Nuevo' : '/admin/propietario?new', 'Listar' : '/admin/propietario' },
+    'garante' : {'Nuevo' : '/admin/garante?new', 'Listar' : '/admin/garante' },
+    'contrato' : {'Nuevo' : '/admin/contrato?new', 'Listar' : '/admin/contrato' },
+    'propiedad' : {'Nuevo' : '/admin/propiedad?new', 'Listar' : '/admin/propiedad' }		  
 };
 /**
  * Show menu items when the user clicks in an specific menu (E.g: Propiedad)
@@ -115,7 +115,7 @@ var checkDigit = function (value) {
  * @param dni
  */
 var get_inquilino = function (inquilinoDni){
-	var url = getContext() + "/inquilino/get?dni="+inquilinoDni;	
+	var url = getContext() + "/admin/inquilino/get?dni="+inquilinoDni;	
 	$("#contrato_inquilino").empty();
 	$("#inquilino_name").empty();
 	$("#idInquilino").empty();
@@ -125,7 +125,7 @@ var get_inquilino = function (inquilinoDni){
 			$("#inquilino_name").append(persona.nombreCompleto);		
 			$("#idInquilino").attr("value", persona.idPersona);		
 		}else{
-			$("#inquilino_name").append("<span class='error'>No results were found.</span>");
+			$("#inquilino_name").append("<span class='error'>No se han encontrado resultos.</span>");
 			$("#idInquilino").attr("value", "");
 		}
 	});
@@ -138,14 +138,14 @@ var get_inquilino = function (inquilinoDni){
  * @param page Page Number
  */
 var get_contratos = function (fn, fv, page){	
-	var url = getContext() + "/contrato/search?fieldName="+fn+"&fieldValue="+fv+"&page="+page;
+	var url = getContext() + "/admin/contrato/search?fieldName="+fn+"&fieldValue="+fv+"&page="+page;
 	$("table tbody").empty();
 	$.getJSON(url, function (result){
 	  for (var i = 0; i < result.contratoList.length; i++){
 		var row = "<tr><td>"+result.contratoList[i].nombreInquilino+"</td>";
 		row += "<td>"+result.contratoList[i].propiedad+"</td>";
-		row += "<td>"+result.contratoList[i].estadoContrato+"</td>";		
-		var pagarPath = getContext() + "/contrato/cuotas/"+result.contratoList[i].idContrato;
+		row += "<td>"+result.contratoList[i].estadoContrato.toUpperCase() +"</td>";		
+		var pagarPath = getContext() + "/admin/contrato/cuotas/"+result.contratoList[i].idContrato;
 		row += "<td><a href='"+pagarPath+"'>Pagar</a></td></tr>"
 		$("table tbody").append(row);
 	  }		
@@ -157,7 +157,7 @@ var get_contratos = function (fn, fv, page){
  * @param provinciaId int
  */
 var get_localidades = function (provinciaId){
-	var url = getContext() + "/localidad/"+provinciaId;
+	var url = getContext() + "/admin/localidad/"+provinciaId;
 	$("#localidad").empty();			
 	$.getJSON(url, function (localidades){		
 		for(var i = 0; i < localidades.length; i++){
@@ -174,7 +174,7 @@ var get_localidades = function (provinciaId){
  * @param garanteDni
  */
 var get_garante = function(garanteDni){
-	var url = getContext() + "/garante/get?dni="+garanteDni;	
+	var url = getContext() + "/admin/garante/get?dni="+garanteDni;	
 	$("#inquilino_garante").empty();
 	$("#inquilino_name").empty();
 	$("#idGarante").empty();
@@ -184,7 +184,7 @@ var get_garante = function(garanteDni){
 			$("#inquilino_name").append(persona.nombreCompleto);		
 			$("#idGarante").attr("value", persona.idPersona);		
 		}else{
-			$("#inquilino_name").append("<span class='error'>No exiten resultados.</span>");
+			$("#inquilino_name").append("<span class='error'>No se han econtrado resultados.</span>");
 			$("#idGarante").attr("value", "");
 		}
 	});
@@ -195,17 +195,17 @@ var get_garante = function(garanteDni){
  * @param propietarioDni
  */
 var get_propietario = function (propietarioDni){
-	var url = getContext() + "/propietario/get?dni="+propietarioDni;	
+	var url = getContext() + "/admin/propietario/get?dni="+propietarioDni;	
 	$("#propiedad_propietario").empty();
 	$("#propietario_name").empty();
 	$("#idPropietario").empty();
 	$("#propietario_name").show();
 	$.getJSON(url, function (persona){		
 		if (persona && persona.idPersona){
-			$("#propietario_name").append("Owner: "+ persona.nombreCompleto);		
+			$("#propietario_name").append(persona.nombreCompleto);		
 			$("#idPropietario").attr("value", persona.idPersona);		
 		}else{
-			$("#propietario_name").append("<span class='error'>No results were found.</span>");
+			$("#propietario_name").append("<span class='error'>No se han econtrado resultados.</span>");
 			$("#idPropietario").attr("value", "");
 		}
 	});
@@ -228,7 +228,7 @@ var get_propiedades = function(){
 	var precioMaximo=parseInt($("#precioMaximo").val()) || 0;
 	var dormitorios=parseInt($("#dormitorio").val()) || 0;
 	
-	var url = getContext() + "/propiedad/search?";
+	var url = getContext() + "/admin/propiedad/search?";
 	url += "tipoPropiedad="+tipo+"&operacionPropiedad="+operacion;
 	url += "&precioMinimo="+precioMinimo+"&precioMaximo="+precioMaximo+"&dormitorios="+dormitorios;
 	
@@ -251,11 +251,59 @@ var get_propiedades = function(){
 			$("table tbody").append(row);
 		 }		
 	  }else{
-		  alert("No exiten resultados para su busqueda!");
+		  alert("No se han econtrado resultados.!");
 	  }
       
 	});			
 };
+
+/**
+* Get list of propiedades
+* 
+* 
+* @param tipo TipodeInmueble
+* @param operacion TipodeOperacion
+* @param precioMinimo 
+* @param precioMaximo
+* @param dorms dormitorios
+*/
+var get_propiedades_in_home = function(){
+	var tipo=$("#tipoPropiedad").val();
+	var operacion=$("#operacionPropiedad").val();
+	var precioMinimo=parseInt($("#precioMinimo").val()) || 0;
+	var precioMaximo=parseInt($("#precioMaximo").val()) || 0;
+	var dormitorios=parseInt($("#dormitorio").val()) || 0;
+	
+	var url = getContext() + "/search?";
+	url += "tipoPropiedad="+tipo+"&operacionPropiedad="+operacion;
+	url += "&precioMinimo="+precioMinimo+"&precioMaximo="+precioMaximo+"&dormitorios="+dormitorios;
+	
+	$("table tbody").empty();		
+	$.getJSON(url, function (result) {
+	  if(result && result.propiedadList.length > 0){
+		for (var i = 0; i < result.propiedadList.length; i++){
+			var idPropiedad = result.propiedadList[i].idPropiedad
+	    	var tipo = result.propiedadList[i].tipoPropiedad;
+	    	var operacion = result.propiedadList[i].operacionPropiedad;
+	    	var precio = parseInt(result.propiedadList[i].precioAlquiler) || parseInt(result.propiedadList[i].precioVenta);
+	    	var dormitorios = result.propiedadList[i].dormitorios || "";
+	    	var domicilio = result.propiedadList[i].domicilio || "";			
+			var urlPath = getContext() + "/propiedad/"+result.propiedadList[i].idPropiedad;
+			var row = "<tr><td><a href='"+urlPath+"'>"+ tipo + "</a></td>";			
+			row += "<td>"+ operacion + "</td>";
+			row += "<td>"+ precio + "</td>";
+			row += "<td>"+ dormitorios + "</td>";
+			row += "<td>"+ domicilio + "</td>";			
+			row += "<td><img alt='Image de Propiedad' src='' id='propiedad"+ idPropiedad +"' height='80px' width='100px'></td></tr>";
+			$("table tbody").append(row);
+		 }
+		 setImages(result.imageMap);
+	  }else{
+		  alert("No se han econtrado resultados.!");
+	  }     
+	});			
+};
+
 /**
  * Get list of persona (Propietarios, Inquilino, Garantes)
  * 

@@ -27,19 +27,25 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario> implements
 				.add(Restrictions.like("username", username))
 				.add(Restrictions.eq("password", password)).uniqueResult();
 	}
+	
+	public Usuario getUsuarioWithCredentials(String username,
+			String respuestaSeguridad, String email) throws DataAccessException {
+		Session session = getSessionFactory().getCurrentSession();
+		Criteria criteria = session.createCriteria(Usuario.class);
+		Criterion criterion1 = Restrictions.eq("email", email);
+		Criterion criterion2 = Restrictions.eq("username", username);
+		Criterion criterion3 = Restrictions.eq("respuestaSeguridad", respuestaSeguridad);
+		criteria.add(Restrictions.conjunction().add(criterion1).add(criterion2).add(criterion3));
+		return (Usuario) criteria.uniqueResult();
+	}
 
-	public boolean isValidarNewUsuario(Usuario usuario)
-			throws DataAccessException {
-		boolean returnValue = false;
+	public boolean isNewUsuario(Usuario usuario) throws DataAccessException {		
 		Session session = getSessionFactory().getCurrentSession();
 		Criteria criteria = session.createCriteria(Usuario.class);
 		Criterion criterion1 = Restrictions.eq("dni", usuario.getDni());
 		Criterion criterion2 = Restrictions.ilike("username",
 				usuario.getUsername());
 		criteria.add(Restrictions.disjunction().add(criterion1).add(criterion2));
-		if (criteria.list().isEmpty()) {
-			return true;
-		}
-		return returnValue;
-	}
+		return criteria.list().isEmpty();
+	}	
 }

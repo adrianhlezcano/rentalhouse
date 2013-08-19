@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
   <div id="formulario">  
-	  <form:form method="POST" modelAttribute="propiedadForm">
+	  <form:form method="POST" modelAttribute="propiedadForm" enctype="multipart/form-data">
 		<form:hidden path="idPropiedad"/>
 		<form:hidden path="action"/>		
 		<fieldset>		
@@ -28,7 +28,7 @@
 		  <p>
 		    <!-- row 0 -->
 		    <label for="propiedad_propietario"><spring:message code="propietarioId" text="DNI Propietario"/></label>
-		  	<input type="text" id="propiedad_propietario" size="8" placeholder="dni">
+		  	<input type="text" id="propiedad_propietario" size="8">
 		  	<input type="button" name="search" id="searchPropietario" value="Checkear"/>
 		  	<form:hidden path="idPropietario"/>
 		  	&nbsp;&nbsp;
@@ -118,21 +118,33 @@
 		    <form:input path="codigoPostal" maxlength="10" id="propiedad_codigoPostal" size="7" placeholder="11" />	    
 		    
 		    <br/> <!-- row 11 -->
-		    <label for="propiedad_provincia"><spring:message code="provincia" text="Provincia"/></label>
-		    <form:select path="idProvincia" id="propiedad_provincia">
+		    <label for="provincia"><spring:message code="provincia" text="Provincia"/></label>
+		    <form:select path="idProvincia" id="provincia">
 		      <c:forEach items="${propiedadForm.provinciaList }" var="provincia">
 		        <form:option value="${provincia.idProvincia }">${provincia.nombre }</form:option>
 		      </c:forEach>		       
 		    </form:select>		   
 		        
 		    <br/> <!-- row 12 -->
-		    <label for="propiedad_localidad"><spring:message code="localidad" text="Localidad"/></label>
-		    <form:select path="idLocalidad" id="propiedad_localidad">
+		    <label for="localidad"><spring:message code="localidad" text="Localidad"/></label>
+		    <form:select path="idLocalidad" id="localidad">
 		      <c:forEach items="${propiedadForm.localidadList }" var="localidad">	          	        
 		        <form:option value="${localidad.idLocalidad}">${localidad.nombre }</form:option>
 		      </c:forEach>	
 		    </form:select>
 		    
+		    <c:if test="${propiedadForm.action == 'INSERT' }">
+		      <div id="uploadImages">
+		    	<fieldset>
+				  <legend>Subir Imagenes</legend>
+				    <label for="image1">Imagen 1:</label><input id="image1" name="files[0]" type="file"/></br>
+				    <label for="image2">Imagen 2:</label><input id="image2" name="files[1]" type="file"/></br>
+				    <label for="image3">Imagen 3:</label><input id="image3" name="files[2]" type="file"/></br>
+				    <label for="image4">Imagen 4:</label><input id="image4" name="files[3]" type="file"/></br>
+				    <label for="image5">Imagen 5:</label><input id="image5" name="files[4]" type="file"/></br>				  				
+				</fieldset>		    
+		      </div>
+		    </c:if>		    
 		    <br/> <!-- row 13 -->
 		    <input type="submit" value="<spring:message code="enviar" text="Enviar"/>" />
 		  </p>	  

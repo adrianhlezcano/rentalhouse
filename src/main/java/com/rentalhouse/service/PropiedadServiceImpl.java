@@ -48,7 +48,7 @@ public class PropiedadServiceImpl implements PropiedadService{
 	public Propiedad get(Integer idPropiedad) {
 		return propiedadDao.get(idPropiedad);		
 	}
-	public List searchPropidades(String tipoOperacion, String tipoPropiedad, 
+	public List<Map<String, Object>> searchPropidades(String tipoOperacion, String tipoPropiedad, 
 			Integer precioMinimo, Integer precioMaximo, Integer dormitorios) {	
 		List<Propiedad> propiedadList = propiedadDao.searchPropidades(tipoOperacion, 
 				tipoPropiedad, precioMinimo, precioMaximo, dormitorios); 
@@ -66,6 +66,11 @@ public class PropiedadServiceImpl implements PropiedadService{
 			returnList.add(propiedadJson);			
 		}			
 		return returnList;			
+	}
+	public List<Propiedad> searchPropidadesByParams(String tipoOperacion, String tipoPropiedad, 
+			Integer precioMinimo, Integer precioMaximo, Integer dormitorios) {	
+		return propiedadDao.searchPropidades(tipoOperacion, 
+				tipoPropiedad, precioMinimo, precioMaximo, dormitorios); 				
 	}
 
 }

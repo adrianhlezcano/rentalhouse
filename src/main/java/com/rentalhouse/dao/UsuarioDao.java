@@ -11,6 +11,9 @@ public interface UsuarioDao extends GenericDao<Usuario> {
 	public Usuario getUsuarioForLogin(String username, String password)
 			throws DataAccessException;
 
-	public boolean isValidarNewUsuario(Usuario usuario)
-			throws DataAccessException;
+	public boolean isNewUsuario(Usuario usuario)
+			throws DataAccessException;	
+	
+	public Usuario getUsuarioWithCredentials(String username,
+			String respuestaSeguridad, String email) throws DataAccessException;
 }

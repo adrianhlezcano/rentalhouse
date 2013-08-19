@@ -42,7 +42,7 @@ public class Domicilio implements Serializable{
 	
 	@Column(name="PISO", length=2, nullable=true)
 	public String getPiso() { return piso; }
-	public void setPiso(String piso) { this.piso = piso; }
+	public void setPiso(String piso) { this.piso = piso.toUpperCase(); }
 	
 	@Column(name="DEPTO", length=2, nullable=true)
 	public String getDepto() { return depto; }

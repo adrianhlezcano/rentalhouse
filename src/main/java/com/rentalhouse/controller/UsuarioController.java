@@ -1,5 +1,7 @@
 package com.rentalhouse.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.impl.LogFactoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +21,7 @@ import com.rentalhouse.validation.UsuarioValidator;
 import javax.servlet.http.*;
 
 @Controller()
-@RequestMapping("/usuario")
+@RequestMapping("/admin/usuario")
 public class UsuarioController {
 	@Autowired
 	@Qualifier("personaService")
@@ -28,46 +30,69 @@ public class UsuarioController {
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(ModelMap model){
 		model.addAttribute(new UsuarioForm());
-		return "usuario/login";
+		return "admin/usuario/login";
 	}
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String handlerLogin(@ModelAttribute UsuarioForm usuarioForm, BindingResult result,
 			HttpServletRequest request){
 		Usuario user = personaService.getUsuarioForLogin(usuarioForm.getUsername(), usuarioForm.getPassword());
-		if (user != null){
+		if (user != null){			
 			synchronized (request.getSession()) {
 				request.getSession().setAttribute("user", user);					
 			}		
-			return "redirect:/home";
+			return "redirect:/admin/propiedad";
 		}
 		result.addError(new ObjectError("usuario", "El usuario no existe o la password es incorrecta."));
-		return "usuario/login";
+		return "admin/usuario/login";
 	}
 	@RequestMapping(value="/registrar", method=RequestMethod.GET)
 	public String register(ModelMap model){
 		model.addAttribute(new UsuarioForm(AppConstant.INSERT));
-		return "usuario/register";		
+		return "admin/usuario/register";		
 	}
 	@RequestMapping(value="/registrar", method=RequestMethod.POST)
 	public String handleRegister(@ModelAttribute UsuarioForm usuarioForm, BindingResult result,
 			HttpServletRequest request){
 		new UsuarioValidator().validate(usuarioForm, result);
 		if(result.hasErrors()){
-			return "usuario/register";
+			return "admin/usuario/register";
 		}
-		Usuario user = personaService.getUsuarioByUsername(usuarioForm.getUsername());
-		if (user != null){
+		
+		Usuario user = usuarioForm.toUsuario(new Usuario());
+		if (!personaService.isNewUsuario(user)){
 			result.addError(new ObjectError("usuario", "El usuario ya existe."));
-			return "usuario/register";
+			return "admin/usuario/register";
 		}else{
-			user = usuarioForm.toUsuario(new Usuario());
 			personaService.save(user);
 			synchronized (request.getSession()) {
 				request.getSession().setAttribute("user", user);					
 			}			
-			return "redirect:/home";
+			return "redirect:/admin/propiedad";
 		}				
 	}
-	
-	
+	@RequestMapping(value="/obtenerCredencial", method=RequestMethod.GET)
+	public String getCredential(ModelMap model){
+		model.addAttribute(new UsuarioForm());
+		return "admin/usuario/getCredential";		
+	}
+	@RequestMapping(value="/obtenerCredencial", method=RequestMethod.POST)
+	public String getCredential(@ModelAttribute UsuarioForm usuarioForm, BindingResult result,
+			HttpServletRequest request){
+		new UsuarioValidator().validateCredentials(usuarioForm, result);
+		if(result.hasErrors()){
+			return "admin/usuario/getCredential";
+		}
+		Usuario user = personaService.getUsuarioWithCredentials
+		(usuarioForm.getUsername(), usuarioForm.getRespuestaSeguridad(), usuarioForm.getEmail());
+		
+		if (user == null){
+			result.addError(new ObjectError("usuario", "El usuario no ya existe."));
+			return "admin/usuario/getCredential";
+		}else{			
+			synchronized (request.getSession()) {
+				request.getSession().setAttribute("user", user);					
+			}			
+			return "redirect:/admin/propiedad";
+		}				
+	}
 }

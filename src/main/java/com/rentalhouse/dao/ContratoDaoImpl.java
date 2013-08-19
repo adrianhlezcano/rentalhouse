@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.rentalhouse.domain.Contrato;
+import com.rentalhouse.domain.EstadoContrato;
 
 @Repository("contratoDao")
 public class ContratoDaoImpl extends GenericDaoImpl<Contrato> implements ContratoDao {
@@ -43,6 +44,7 @@ public class ContratoDaoImpl extends GenericDaoImpl<Contrato> implements Contrat
 		return (List<Contrato>) getSessionFactory().getCurrentSession().createCriteria(Contrato.class)
 		.setFetchMode("propiedad", FetchMode.JOIN)
 		.setFetchMode("inquilino", FetchMode.JOIN)
+		.add(Restrictions.eq("estadoContrato", EstadoContrato.VIGENTE))
 		.addOrder(Order.desc("fechaCreacion"))
 		.setFirstResult(firstRow)
 		.setMaxResults(maxRows)

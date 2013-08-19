@@ -109,7 +109,7 @@ public class Propiedad implements Serializable {
 	
 	@Column(name="SUPERFICIE", nullable=true)
 	public Integer getSuperficie() { return superficie; }
-	public void setSuperficie(Integer superficie) { this.superficie = superficie; }
+	public void setSuperficie(Integer superficie) { this.superficie = superficie; }	
 		
 	@Override
 	public boolean equals(Object obj) {		

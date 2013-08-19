@@ -4,7 +4,7 @@
 	<form:hidden path="idPersona"/>
 	<form:hidden path="action"/>		
 	<fieldset>		
-	  <legend>Registration</legend>	 
+	  <legend>Registrarse</legend>	 
 	  <ul>
 	    <form:errors element="li" path="apellido" cssClass="error"/>	
 	    <form:errors element="li" path="nombre" cssClass="error" />
@@ -21,7 +21,7 @@
 	  <p>	  
 	    <!-- row 0 -->
 	    <label for="usuario_apellido"><spring:message code="apellido" text="Apellido"/></label>
-	  	<form:input path="apellido" maxlength="25" id="usuario_apellido"/>		  	 
+	  	<form:input path="apellido" maxlength="25" id="usuario_apellido"  />		  	 
 	  	
         <br/> <!-- row 1 -->
 	  	<label for="usuario_nombre"><spring:message code="nombre" text="Nombre"/></label>
@@ -34,8 +34,8 @@
 		<br/><!-- row 3 -->
 		<label for="usuario_password"><spring:message code="password" text="Password"/></label>
 		<form:password path="password" maxlength="25" id="usuario_password"/>
-		&nbsp;&nbsp;
-		<label for="usuario_password2"><spring:message code="passwordConfirmar" text="Confirmar Password"/></label>
+		<br/>
+		<label for="usuario_password2"><spring:message code="passwordConfirmar" text="Confirmar"/></label>
 		<form:password path="password2" maxlength="25" id="usuario_password2"/>
 			 
 		<br/><!-- row 4 -->
@@ -43,7 +43,7 @@
 		<form:select path="preguntaSeguridad" id="usuario_preguntaSeguridad">
 		  <form:options items="${usuarioForm.preguntas }"/>
 	    </form:select>
-		&nbsp;&nbsp;
+		<br/><!-- row 4 -->
 		<label for="usuario_respuestaSeguridad"><spring:message code="respuestaSeguridad" text="Respuesta Seguridad"/></label>
 		<form:input path="respuestaSeguridad" maxlength="15" id="usuario_respuestaSeguridad"/>
 	

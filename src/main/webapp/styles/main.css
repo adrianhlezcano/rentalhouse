@@ -160,9 +160,11 @@ table tr th{
 table tr:nth-child(2n){
   background-color: #fcba7a;	
 }
-div#detalle ul{
-  list-style-type: none;
-  line-height: 1.5em;
+div#detalle{
+	line-height: 1.5em;
+}
+div#detalle ul, div#uploadImages ul{
+  list-style-type: none;  
 }
 div#formulario{
   line-height: 2.5em;	
@@ -191,3 +193,10 @@ div#search{
   width: 200px; 
   height: 100px;
 }
+.userRegistered{
+  font-size: 150%; 
+  font-weight: bold;
+  font-family: Arial, Verdana, sans-serif;
+  text-align: right;  
+  color: ##954B4B; 		
+}	

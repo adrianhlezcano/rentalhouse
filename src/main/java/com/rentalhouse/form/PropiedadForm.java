@@ -3,8 +3,7 @@ package com.rentalhouse.form;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.impl.LogFactoryImpl;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rentalhouse.domain.Domicilio;
 import com.rentalhouse.domain.Localidad;
@@ -47,14 +46,15 @@ public class PropiedadForm {
 	private List<TipoPropiedad> tiposPropiedad=Arrays.asList(TipoPropiedad.values());
 	private List<Localidad> localidadList;
 	private List<Provincia> provinciaList;
+	private List<MultipartFile> files;
 	private List<String> dormitorioList=Arrays.asList("0","1","2","3","4","5","6","7","8","9","10","+ 10");
 	
 	public PropiedadForm() {
 		setIdPropietario(0);
 		setIdProvincia(4); // 4 = CORRIENTES (by default)
-		setPrecioAlquiler("0");
-		setPrecioVenta("0");
-		setSuperficie("0");
+		setPrecioAlquiler("");
+		setPrecioVenta("");
+		setSuperficie("");
 		setTipoMoneda(TipoMoneda.PESOS.toString());
 		setPublicar(Boolean.TRUE);
 		setEstrenar(Boolean.TRUE);
@@ -294,4 +294,11 @@ public class PropiedadForm {
 	public void setNombrePropietario(String nombrePropietario) {
 		this.nombrePropietario = nombrePropietario;
 	}
+	public List<MultipartFile> getFiles() {
+		return files;
+	}
+	public void setFiles(List<MultipartFile> files) {
+		this.files = files;
+	}
+	
 }

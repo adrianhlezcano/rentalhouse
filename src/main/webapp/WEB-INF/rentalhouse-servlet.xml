@@ -86,10 +86,10 @@
     	each request is treated as a normal attribute in the request.
     	It use commons-fileupload.jar.
      -->
-<!-- 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
-		<!-- max file size to upload in bytes -->
-<!-- 		<property name="maxUploadSize" value="100000"/>	 -->
-<!-- 	</bean> -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<!-- 		max file size to upload in bytes -->
+		<property name="maxUploadSize" value="100000"/>	
+	</bean>
 	
 	<!-- sets up a handler for static resources  REVIEW THIS BEAN!!!! -->
     <!-- <mvc:resources location="/resources/**" mapping="/resources/"/> -->	

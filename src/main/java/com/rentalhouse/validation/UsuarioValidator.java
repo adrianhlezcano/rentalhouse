@@ -37,4 +37,18 @@ public class UsuarioValidator {
 			errors.rejectValue("respuestaSeguridad", "respuestaSeguridad.invalid", "respuestaSeguridad.invalid");
 		}		
 	}
+	public void validateCredentials(UsuarioForm usuarioForm, Errors errors) {		
+		if (!StringValidation.isValidString(usuarioForm.getUsername(), 5, 25)) {
+			errors.rejectValue("username", "username.invalid", "username.invalid");
+		}	
+		if(!StringValidation.isValidString(usuarioForm.getEmail(), 10, 60, "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")){
+			errors.rejectValue("email", "email.invalid", "email.invalid");
+		}			
+		if (!UsuarioForm.PREGUNTAS.contains(usuarioForm.getPreguntaSeguridad())){
+			errors.rejectValue("preguntaSeguridad", "preguntaSeguridad.invalid", "preguntaSeguridad.invalid");
+		}
+		if (!StringValidation.isValidString(usuarioForm.getRespuestaSeguridad(), 3, 25)){
+			errors.rejectValue("respuestaSeguridad", "respuestaSeguridad.invalid", "respuestaSeguridad.invalid");
+		}		
+	}
 }

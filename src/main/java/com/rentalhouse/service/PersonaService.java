@@ -19,4 +19,7 @@ public interface PersonaService {
 	public List<Persona> findPersonaByFieldValue(String fieldName, String fieldValue, Class<? extends Persona> type);
 	public Usuario getUsuarioByUsername(String username);
 	public Usuario getUsuarioForLogin(String username, String password);	
+	public boolean isNewUsuario(Usuario usuario);
+	public Usuario getUsuarioWithCredentials(String username,
+			String respuestaSeguridad, String email);
 }

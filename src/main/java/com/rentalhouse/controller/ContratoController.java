@@ -20,18 +20,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rentalhouse.domain.Contrato;
 import com.rentalhouse.domain.Cuota;
+import com.rentalhouse.domain.EstadoContrato;
+import com.rentalhouse.domain.Garante;
 import com.rentalhouse.domain.Inquilino;
 import com.rentalhouse.domain.OperacionPropiedad;
 import com.rentalhouse.domain.Propiedad;
 import com.rentalhouse.form.ContratoForm;
+import com.rentalhouse.form.InquilinoForm;
 import com.rentalhouse.service.ContratoService;
 import com.rentalhouse.service.PersonaService;
 import com.rentalhouse.service.PropiedadService;
 import com.rentalhouse.utils.AppConstant;
 import com.rentalhouse.validation.ContratoValidator;
+import com.sun.corba.se.impl.copyobject.JavaStreamObjectCopierImpl;
 
 @Controller()
-@RequestMapping("/contrato")
+@RequestMapping("/admin/contrato")
 public class ContratoController {
 	@Autowired
 	@Qualifier("contratoService")
@@ -42,25 +46,26 @@ public class ContratoController {
 	@Autowired
 	@Qualifier("personaService")
 	private PersonaService personaService;
+	private Log _log = LogFactoryImpl.getLog(getClass());
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String show(Model model){
 		model.addAttribute(contratoService.getContratos(0, 10));
-		return "contrato/list";
+		return "admin/contrato/list";
 	}	
 	@RequestMapping(method=RequestMethod.GET, params="new")
 	public String setupForm(Model model){
 		ContratoForm form = new ContratoForm();
 		form.setPropiedadList(propiedadService.getPropidadByField("operacionPropiedad", OperacionPropiedad.ALQUILA));
 		model.addAttribute(form);
-		return "contrato/form";
+		return "admin/contrato/form";
 	}	
 	@RequestMapping(method=RequestMethod.POST)
 	public String processForm(@ModelAttribute("contratoForm") ContratoForm form, BindingResult result){
 		new ContratoValidator().validate(form, result);
 		if (result.hasErrors()){
 			form.setPropiedadList(propiedadService.getPropidadByField("operacionPropiedad", OperacionPropiedad.ALQUILA));
-			return "contrato/form";
+			return "admin/contrato/form";
 		}
 		Inquilino inquilino = (Inquilino) personaService.get(form.getIdInquilino());
 		Propiedad propiedad = propiedadService.get(form.getIdPropiedad());
@@ -71,20 +76,29 @@ public class ContratoController {
 			propiedadService.update(propiedad);
 			form.setIdContrato(contrato.getIdContrato());
 		}
-		return "redirect:/contrato/"+form.getIdContrato();
+		return "redirect:/admin/contrato/"+form.getIdContrato();
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/{idContrato}")
 	public String displayPropiedad(@PathVariable Integer idContrato, Model model){
+		_log.info("/admin/contrato/"+idContrato);
 		model.addAttribute(contratoService.getContratoById(idContrato));
-		return "contrato/display";
+		return "admin/contrato/display";
+	}
+	@RequestMapping(method=RequestMethod.GET, value="/cancel/{idContrato}")
+	public String cancelar(@PathVariable Integer idContrato, Model model){
+		Contrato contrato = contratoService.getContratoById(idContrato);
+		contrato.setEstadoContrato(EstadoContrato.CANCELADO);
+		contratoService.updateContrato(contrato);
+		return "redirect:/admin/contrato";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/cuotas/{idContrato}")
 	public String displayCuotas(@PathVariable Integer idContrato, @RequestParam("page")Integer page, Model model){
 		model.addAttribute(contratoService.getCuotaByIdContrato(idContrato, page * 10, 10));
 		Integer totalRows = contratoService.numberOfCuotasByContrato(idContrato);
+		model.addAttribute("contrato", contratoService.getContratoById(idContrato));
 		model.addAttribute("previous", page == 0 ? -1 : page - 1);
 		model.addAttribute("next",page * 10 > totalRows.intValue() - 10? -1 : page + 1);
-		return "contrato/cuotas";
+		return "admin/contrato/cuotas";
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/cuotas/{idContrato}")
 	public String payCuota(@PathVariable Integer idContrato, @RequestParam("idCuota")Integer idCuota,
@@ -93,7 +107,7 @@ public class ContratoController {
 		Cuota cuota = (Cuota) contratoService.getCuota(idCuota);
 		cuota.pay(importePagado);		
 		contratoService.updateCuota(cuota);
-		return "redirect:/contrato/cuotas/"+idContrato+"?page="+page;		
+		return "redirect:/admin/contrato/cuotas/"+idContrato+"?page="+page;		
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/search")
 	public @ResponseBody Map<String, Object> search(

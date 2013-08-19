@@ -19,7 +19,7 @@ $("#searchButton").click(function(){
 	if (fieldName && fieldValue){
 		get_contratos(fieldName, fieldValue, 0);	
 	} else {
-		alert("The search text field is empty.")
+		alert("El campo de busqueda esta incompleto.")
 	}			
 });	
 </script>
