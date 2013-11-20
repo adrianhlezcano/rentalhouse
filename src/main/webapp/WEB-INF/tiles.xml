@@ -94,6 +94,10 @@
 	<definition name="uncaughtException" extends="template">	
 		<put-attribute name="content" value="/WEB-INF/jsp/exception/uncaughtException.jsp"/>
 	</definition>
+	<!-- REPORT -->
+	<definition name="admin/reportes" extends="template">
+		<put-attribute name="content" value="/WEB-INF/jsp/reportes/display.jsp"/>
+	</definition>
 	<!-- PUBLIC -->
 	<definition name="public" template="/WEB-INF/jsp/public/home.jsp">
 		<put-attribute name="search" value=""/>		

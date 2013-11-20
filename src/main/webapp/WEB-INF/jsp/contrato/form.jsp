@@ -30,12 +30,12 @@
     </fieldset>
   </div>  
     
-  <br/><!-- row 1 -->  
+  <!-- row 1 -->  
   <div id="searchProperty">
     <fieldset>
-       	
+    <legend>Seleccionar Inmueble</legend>   	
    	<form:select path="idPropiedad" id="contrato_propiedad" size="5" style="width: 450px;">
-   	  <form:option value="0" selected="selected">-- Seleccionar Inmueble --</form:option>
+   	  <form:option value="0" selected="selected">-- Lista de Inmuebles --</form:option>
    	  
 	  <c:forEach items="${contratoForm.propiedadList }" var="propiedad">	          	        
 		<form:option value="${propiedad.idPropiedad}">

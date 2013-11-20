@@ -45,6 +45,7 @@ public class GaranteController {
 		form.setIdProvincia(4);  // PROVINCIA 4 = 'Corrientes'
 		form.setProvinciaList(localidadService.getProvincias());
 		form.setLocalidadList(localidadService.getLocalidadByIdProvincia(4));
+		form.setIdLocalidad(4156);
 		model.addAttribute(form);
 		return "admin/garante/form";
 	}
@@ -101,8 +102,7 @@ public class GaranteController {
 		Persona persona =  personaService.getByDni(dni, Garante.class);
 		Map<String, String> result = new HashMap<String, String>();
 		if(persona != null){			
-			result.put("nombre", persona.getNombre());
-			result.put("apellido", persona.getApellido());
+			result.put("nombreCompleto", persona.getNombreCompleto());	
 			result.put("idPersona", String.valueOf(persona.getIdPersona()));
 		}
 		return result;

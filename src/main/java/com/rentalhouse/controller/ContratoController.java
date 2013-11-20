@@ -21,18 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.rentalhouse.domain.Contrato;
 import com.rentalhouse.domain.Cuota;
 import com.rentalhouse.domain.EstadoContrato;
-import com.rentalhouse.domain.Garante;
 import com.rentalhouse.domain.Inquilino;
 import com.rentalhouse.domain.OperacionPropiedad;
 import com.rentalhouse.domain.Propiedad;
 import com.rentalhouse.form.ContratoForm;
-import com.rentalhouse.form.InquilinoForm;
 import com.rentalhouse.service.ContratoService;
 import com.rentalhouse.service.PersonaService;
 import com.rentalhouse.service.PropiedadService;
 import com.rentalhouse.utils.AppConstant;
 import com.rentalhouse.validation.ContratoValidator;
-import com.sun.corba.se.impl.copyobject.JavaStreamObjectCopierImpl;
 
 @Controller()
 @RequestMapping("/admin/contrato")
@@ -89,6 +86,9 @@ public class ContratoController {
 		Contrato contrato = contratoService.getContratoById(idContrato);
 		contrato.setEstadoContrato(EstadoContrato.CANCELADO);
 		contratoService.updateContrato(contrato);
+		Propiedad propiedad = propiedadService.get(contrato.getPropiedad().getIdPropiedad());
+		propiedad.setPublicar(Boolean.TRUE);
+		propiedadService.update(propiedad);		
 		return "redirect:/admin/contrato";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/cuotas/{idContrato}")

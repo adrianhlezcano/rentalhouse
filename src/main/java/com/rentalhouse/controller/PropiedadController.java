@@ -62,6 +62,7 @@ public class PropiedadController {
 		PropiedadForm form = new PropiedadForm(); // load object with default values
 		form.setProvinciaList(localidadService.getProvincias());
 		form.setLocalidadList(localidadService.getLocalidadByIdProvincia(form.getIdProvincia()));
+		form.setIdLocalidad(4156);
 		model.addAttribute(form);
 		return "admin/propiedad/form";
 	}	
@@ -69,7 +70,7 @@ public class PropiedadController {
 	public String processForm(@ModelAttribute PropiedadForm propiedadForm, BindingResult result, ServletRequest request, 
 			@RequestParam(value="image", required=false) MultipartFile[] images){
 		new PropiedadValidator().validate(propiedadForm, result);
-		Propietario propietario = null;
+		Propietario propietario = null;		
 		if(propiedadForm.getIdPropietario() != null && 0 != propiedadForm.getIdPropietario()){
 			propietario = (Propietario) propietarioService.get(propiedadForm.getIdPropietario());
 		}
@@ -88,7 +89,7 @@ public class PropiedadController {
 			
 			if(propiedadForm.getFiles() != null && propiedadForm.getFiles().size() > 0){
 				int counter = 0;
-				String imageDir = context.getRealPath("/images");	
+				String imageDir = context.getRealPath("/resources/images");	
 				for (MultipartFile file : propiedadForm.getFiles()) {
 					if (file != null && !file.isEmpty()){
 						String propiedadId = String.valueOf(propiedad.getIdPropiedad());
@@ -111,15 +112,19 @@ public class PropiedadController {
 		Propiedad propiedad = propiedadService.getPropiedadById(idPropiedad);
 		Localidad localidad = localidadService.getLocalidadById(propiedad.getDomicilio().getLocalidad().getIdLocalidad());
 		propiedad.getDomicilio().setLocalidad(localidad);
-		Set<String> images = context.getResourcePaths("/images/"+propiedad.getIdPropiedad());
-		StringBuilder sb = new StringBuilder();
-		for (String image:images) {
-			sb.append(image).append(";");
+		Set<String> images = context.getResourcePaths("/resources/images/"+propiedad.getIdPropiedad());
+		if (images != null && images.size() > 0) {
+			StringBuilder sb = new StringBuilder();
+			for (String image:images) {
+				sb.append(image).append(";");
+			}
+			String imgList = sb.toString();
+			imgList = imgList.substring(0, imgList.length() - 1);
+			model.addAttribute("imgList", imgList);
+			_log.info(imgList);
+		} else {
+			model.addAttribute("imgList", "");
 		}
-		String imgList = sb.toString();
-		imgList = imgList.substring(0, imgList.length() - 1);
-		_log.info(imgList);
-		model.addAttribute("imgList", imgList);
 		model.addAttribute(propiedad);
 		return "admin/propiedad/display";
 	}

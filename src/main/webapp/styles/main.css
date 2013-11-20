@@ -88,6 +88,7 @@ div#tableContainer{
   display: table;
   border-spacing: 10px;  
   height: 450px;
+  width: 100%;
 }
 div#tableRow{
   display: table-row;	

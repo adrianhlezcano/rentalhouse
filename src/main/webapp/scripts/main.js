@@ -246,7 +246,7 @@ var get_propiedades = function(){
 			row += "<td>"+ precioMinimo + "</td>";
 			row += "<td>"+ precioMaximo + "</td>";
 			row += "<td>"+ dormitorios + "</td>";
-			var urlPath = getContext() + "/propiedad/"+result.propiedadList[i].idPropiedad;
+			var urlPath = getContext() + "/admin/propiedad/"+result.propiedadList[i].idPropiedad;
 			row += "<td><a href='"+urlPath+"'>Ver</a></td></tr>";
 			$("table tbody").append(row);
 		 }		

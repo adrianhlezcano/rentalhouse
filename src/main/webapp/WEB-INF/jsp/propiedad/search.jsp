@@ -26,18 +26,18 @@
 	      <input  name="precioMinimo" maxlength="10" id="precioMinimo" size="7" placeholder="1000" />
 	      &nbsp;&nbsp;
 	      <label for="precioMaximo"><spring:message code="hasta" text="hasta"/></label>
-	      <input  name="precioMaximo" maxlength="10" id="precioMaximo" size="7" placeholder="2000"/>
-	      &nbsp;&nbsp;&nbsp;&nbsp;
+	      <input  name="precioMaximo" maxlength="10" id="precioMaximo" size="7" placeholder="2000"/>	
+	      &nbsp;&nbsp;&nbsp;&nbsp;  
 	      <label for="dormitorio"><spring:message code="dormitorio" text="Dormitorios"/></label>
 	      <select name="dormitorios" id="dormitorio">
 		    <c:forEach items="${propiedadForm.dormitorioList }" var="dormitorio">
 		      <option value="${dormitorio }">${dormitorio }</option>
 		    </c:forEach>
-		  </select>
+		  </select>  	                  
 	    </div>	    
-	    <div>	      
+	    <div>	
 		  <input type="submit" id="searchButton" value="<spring:message code="buscar" text="Buscar"/>" />  	 
-	    </div>	    
+	    </div>	   
   </fieldset>
 </div>
 <script type="text/javascript">

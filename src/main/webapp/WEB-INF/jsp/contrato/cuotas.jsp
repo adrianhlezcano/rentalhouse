@@ -50,7 +50,7 @@
 		        </form:form>
 			</c:otherwise>
 			</c:choose>				
-			</tr>
+			</tr>			
 		</c:forEach>
 	</tbody>
 	<tfoot>

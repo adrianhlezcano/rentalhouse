@@ -46,6 +46,7 @@ public class PropietarioController {
 		form.setIdProvincia(4);
 		form.setProvinciaList(localidadService.getProvincias());
 		form.setLocalidadList(localidadService.getLocalidadByIdProvincia(4));
+		form.setIdLocalidad(4156);
 		model.addAttribute(form);
 		return "admin/propietario/form";
 	}

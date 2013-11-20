@@ -13,7 +13,7 @@
 				image = image.split(":");
 				var imgId = image[0];
 				var imgVal = image[1];				
-				$("#propiedad"+imgId).attr("src", context.concat("/resources").concat(imgVal));
+				$("#propiedad"+imgId).attr("src", context.concat(imgVal));
 			}
 		}
 	};

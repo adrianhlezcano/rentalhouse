@@ -13,7 +13,7 @@
 	-->
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>rentalhouse.root</param-value>
+		<param-value>rentalhouse</param-value>
 	</context-param>
 	
 	<!-- Location of the Log4J config file, for initialization and refresh checks. 
@@ -22,13 +22,6 @@
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/log4j.properties</param-value>
 	</context-param>
-
-	<!-- - Map static resources to the default servlet - examples: - http://localhost:8080/static/images/pets.png 
-		- http://localhost:8080/static/styles/petclinic.css -->
-	<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>/resources/*</url-pattern>
-	</servlet-mapping>
 
 	<!-- Sessions time out in 10 min. -->
 	<session-config>
@@ -66,24 +59,18 @@
 		<servlet-name>rentalhouse</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
 	
-	<filter>
-		<filter-name>httpMethodFilter</filter-name>
-		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>httpMethodFilter</filter-name>
-		<servlet-name>rentalhouse</servlet-name>
-	</filter-mapping>
+<!-- 	<filter> -->
+<!-- 		<filter-name>httpMethodFilter</filter-name> -->
+<!-- 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>httpMethodFilter</filter-name> -->
+<!-- 		<servlet-name>rentalhouse</servlet-name> -->
+<!-- 	</filter-mapping> -->
 	
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/welcome.jsp</welcome-file>
 	</welcome-file-list>
-	<servlet-mapping>
-	
-    <servlet-name>jsp</servlet-name>
-    <url-pattern>*.js</url-pattern>
-</servlet-mapping>
 	
 </web-app>

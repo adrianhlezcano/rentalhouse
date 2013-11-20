@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
 <script type="text/javascript">
 $(document).ready(function(){	
-	$("#searchGarante").bind("click", function() {		
+	$("#searchGarante").bind("click", function() {	
 		get_garante($("#inquilino_garante").val());		
 	});		
 });
@@ -96,15 +96,16 @@ $(document).ready(function(){
 		<br/><!-- row 7 -->
 	    <label for="inquilino_ocupacion"><spring:message code="ocupacion" text="Ocupacion"/></label>
 		<form:input path="ocupacion" maxlength="30" id="inquilino_ocupacion"/>		
-	    &nbsp;&nbsp;
+		
+	    <br/><!-- row 8 -->
 	    <label for="inquilino_lugarTrabajo"><spring:message code="lugarTrabajo" text="Empresa"/></label>
 		<form:input path="lugarTrabajo" maxlength="25" id="inquilino_lugarTrabajo"/>
  		      		    
-	    <br/><!-- row 8 -->
+	    <br/><!-- row 9 -->
 	    <label for="inquilino_ingreso"><spring:message code="ingreso" text="Salario"/></label>
 		<form:input path="ingreso" maxlength="10" size="8" id="inquilino_ingreso"/>	    
 
-	    <br/> <!-- row 9 -->
+	    <br/> <!-- row 10 -->
 	    <input type="submit" value="<spring:message code="enviar" text="Enviar"/>" />
 	  </p>	  
 	</fieldset>

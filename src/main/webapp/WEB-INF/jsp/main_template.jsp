@@ -33,6 +33,9 @@
 			var provinciaId = $("#provincia").attr("value");
 			get_localidades(provinciaId);
 		});
+		$("#createReport").click(function(){
+			getReports();
+		});
   	});
  
 </script>  
@@ -60,6 +63,7 @@
       <li class="menuItem">Garante</li>
       <li class="menuItem">Contrato</li>
       <li class="menuItem">Propiedad</li>
+      <li class="menuItem">Reportes</li>
     </ul>    
   </nav>   
 
@@ -70,13 +74,18 @@
           <tiles:insertAttribute name="content"/>	             
       </section>
       <aside>
-         <tiles:insertAttribute name="login"/>	      
+      	<div style="text-align: right;">
+      	  <a href="<spring:url value='/'/>">publico</a>
+      	</div>
+      	<br/>
+        <tiles:insertAttribute name="login"/>	      
       </aside>     
     </div>     
   </div>
   <footer>
-    &copy; 2013, <author>Adrian Lezcano</author><br/>
-    All trademarks and registered trademarks on this site are property of the respective owner.
+    Copyright &copy; 2013, <author>Adrian Lezcano</author><br/>
+    This program is free software: you can redistribute it and/or modify <br/>
+    it under the terms of the GNU General Public License version 3.
   </footer>  
   </div>   
   </c:otherwise>	

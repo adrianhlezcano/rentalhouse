@@ -10,14 +10,18 @@
 			imageList = imageList.split(";");
 			for (i = 0; i < imageList.length; i++) {
 				if (imageName === "") {
-					return context + "/resources" + imageList[0];
+// 					return context + "/resources" + imageList[0];
+					return context + imageList[0];
 				}
-				var imgName = context + "/resources" + imageList[i];
+// 				var imgName = context + "/resources" + imageList[i];
+                var imgName = context + imageList[i];
 				if (imgName === imageName) {
 					if (i === (imageList.length - 1)) {
-						return context + "/resources" + imageList[0];
+// 						return context + "/resources" + imageList[0];
+						return context + imageList[0];
 					} else {
-						return context + "/resources" + imageList[i + 1];
+// 						return context + "/resources" + imageList[i + 1];
+						return context + imageList[i + 1];
 					}
 				}
 			}
@@ -28,7 +32,7 @@
 	
 	var rotateImages = function() {
 		var src = $("#rotateImage").attr("src");
-		var nextImg = getNextImage(src);
+		var nextImg = getNextImage(src);		
 		$("#rotateImage").attr("src", nextImg);
 		$("#rotateImageUrl").attr("src", nextImg);		
 	};

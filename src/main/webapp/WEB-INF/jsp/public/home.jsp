@@ -59,16 +59,17 @@
       <tiles:insertAttribute name="search"/> 
       <section id="main">
       	  <div style="text-align: right;">
-      	  	<a href="<spring:url value='/'/>admin/">admin</a>
+      	  	<a href="<spring:url value='/admin/'/>">admin</a>
       	  </div>
           <tiles:insertAttribute name="content"/>
       </section>
     </div>
   </div>
   <footer>
-    &copy; 2013, <author>Adrian Lezcano</author><br/>
-    All trademarks and registered trademarks on this site are property of the respective owner.
-  </footer>  
+    Copyright &copy; 2013, <author>Adrian Lezcano</author><br/>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 3.
+  </footer> 
   </div>
 </body>
 </html>

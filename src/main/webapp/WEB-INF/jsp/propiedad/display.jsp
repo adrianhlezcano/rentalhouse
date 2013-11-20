@@ -10,14 +10,14 @@
 			imageList = imageList.split(";");
 			for (i = 0; i < imageList.length; i++) {
 				if (imageName === "") {
-					return context + "/resources" + imageList[0];
+					return context + imageList[0];
 				}
-				var imgName = context + "/resources" + imageList[i];
+				var imgName = context + imageList[i];
 				if (imgName === imageName) {
 					if (i === (imageList.length - 1)) {
-						return context + "/resources" + imageList[0];
+						return context + imageList[0];
 					} else {
-						return context + "/resources" + imageList[i + 1];
+						return context + imageList[i + 1];
 					}
 				}
 			}
@@ -47,12 +47,12 @@
       </span>
 	</legend>
 	  <div>
-      <div id="displayImage" style="width: 220px; height: 220px; float: right; margin: 0px 10px 10px 0px;" >
+      <div id="displayImage" style="width: 250px; height: 250px; float: right; margin: 0px 10px 10px 0px;" >
 	  	<fieldset>
 	  	<legend>Imagenes</legend>
 	  		<div>
 	  			<a href="" id="rotateImageUrl">
-	  			  <img id="rotateImage" alt="Imagen" src="" height="200px" width="200px"/>
+	  			  <img id="rotateImage" alt="Imagen" src="" height="230px" width="230px"/>
 	  			</a>
 	  		</div>  			  	
 	  	</fieldset>

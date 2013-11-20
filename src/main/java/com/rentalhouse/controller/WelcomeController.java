@@ -88,15 +88,19 @@ public class WelcomeController {
 		Propiedad propiedad = propiedadService.getPropiedadById(idPropiedad);
 		Localidad localidad = localidadService.getLocalidadById(propiedad.getDomicilio().getLocalidad().getIdLocalidad());
 		propiedad.getDomicilio().setLocalidad(localidad);
-		Set<String> images = context.getResourcePaths("/images/"+propiedad.getIdPropiedad());
-		StringBuilder sb = new StringBuilder();
-		for (String image:images) {
-			sb.append(image).append(";");
+		Set<String> images = context.getResourcePaths("/resources/images/"+propiedad.getIdPropiedad());
+		if (images != null && images.size() > 0) {
+			StringBuilder sb = new StringBuilder();
+			for (String image:images) {				
+				sb.append(image).append(";");
+			}
+			String imgList = sb.toString();			
+			imgList = imgList.substring(0, imgList.length() - 1);			
+			model.addAttribute("imgList", imgList);
+			_log.info(imgList);
+		} else {
+			model.addAttribute("imgList", "");
 		}
-		String imgList = sb.toString();
-		imgList = imgList.substring(0, imgList.lastIndexOf(";"));
-		_log.info(imgList);
-		model.addAttribute("imgList", imgList);
 		model.addAttribute(propiedad);
 		model.addAttribute(new PropiedadForm());
 		return "displayProperty";
@@ -105,24 +109,30 @@ public class WelcomeController {
 	private String getImages(List<Propiedad> propiedades){
 		StringBuilder sb = new StringBuilder();
 		for(Propiedad prop : propiedades){
-			Set<String> images = context.getResourcePaths("/images/"+prop.getIdPropiedad());
+			Set<String> images = context.getResourcePaths("/resources/images/"+prop.getIdPropiedad());
 			
 			if (images != null && images.size() > 0){
 				sb.append(String.valueOf(prop.getIdPropiedad()).concat(":").
 						concat(images.iterator().next()).concat(";"));				
 			} else {
 				sb.append(String.valueOf(prop.getIdPropiedad()).concat(":").
-						concat("/images/house.jpeg").concat(";"));
+						concat("/resources/images/house.jpeg").concat(";"));				
 			}				
 		}	
 		String returnValue = sb.toString();
 		returnValue = returnValue.substring(0, returnValue.lastIndexOf(";"));
+		_log.info(returnValue);
 		return returnValue;
 	}
 	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
-	public String gotToLogin() {		
-		return "redirect:/admin/usuario/login";
+	public String gotToLogin(HttpServletRequest request) {		
+		synchronized (request.getSession()) {
+			if (request.getSession().getAttribute("user") != null ){
+				return "redirect:/admin/propiedad";				
+			}
+			return "redirect:/admin/usuario/login";
+		}			
 	}
 	
 }

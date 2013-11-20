@@ -16,7 +16,7 @@
 					<td>${inquilinoItem.tipoDni} ${inquilinoItem.dni}</td>
 					<td>${inquilinoItem.tipoTelefono}: ${inquilinoItem.telefono}</td>					
 					<td>						
-						<a href="<spring:url value='/inquilino/${inquilinoItem.dni}'/>">
+						<a href="<spring:url value='/admin/inquilino/${inquilinoItem.dni}'/>">
 							<spring:message code="ver" text="Ver"/>
 						</a>						
 					</td>			

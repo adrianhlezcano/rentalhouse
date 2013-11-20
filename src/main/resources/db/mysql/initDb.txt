@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS _rentalhouse;
+GRANT ALL ON _rentalhouse.* TO '*@localhost';
+
+USE _rentalhouse;
+
